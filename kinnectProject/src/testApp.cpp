@@ -44,11 +44,11 @@ void testApp::setup() {
 
 	m_test0.setWidth(50);
 	m_test0.setHeight(50);
-	m_test0.setPosition(150,-50);
+	m_test0.setPosition(150,-100);
 
 	m_test1.setWidth(50);
 	m_test1.setHeight(50);
-	m_test1.setPosition(150,-50);
+	m_test1.setPosition(350,-30);
 
 }
 
@@ -69,19 +69,46 @@ void testApp::update(){
 
 	if(m_NowScene == SCENE_PLAY)
 	{
-		float nowYPosition = m_test0.getPosition().y;
-		float nextYPosition = nowYPosition + 1;
-		m_test0.setPosition(100,nextYPosition);
+		float now0YPosition = m_test0.getPosition().y;
+		float next0YPosition = now0YPosition + 1;
+		m_test0.setPosition(150,next0YPosition);
 
 		if (BoxCollision(m_test0, m_LeftHandBox)||BoxCollision(m_test0,m_RightHandBox))
+		{
+			float next0YPosition = now0YPosition - 2;
+			float nowScale = m_test0.getWidth();
+			float nextScale = nowScale + 0.2;
+
+			m_test0.setWidth(nextScale);
+			m_test0.setHeight(nextScale);
+			m_test0.setPosition(150,next0YPosition);
+		}
+
+
+		float nowYPosition = m_test1.getPosition().y;
+		float nextYPosition = nowYPosition + 1;
+		m_test1.setPosition(350,nextYPosition);
+
+		if (BoxCollision(m_test1, m_LeftHandBox)||BoxCollision(m_test1,m_RightHandBox))
 		{
 			float nextYPosition = nowYPosition - 2;
 			float nowScale = m_test0.getWidth();
 			float nextScale = nowScale + 0.2;
-			m_test0.setWidth(nextScale);
-			m_test0.setHeight(nextScale);
-			m_test0.setPosition(100,nextYPosition);
+
+			m_test1.setWidth(nextScale);
+			m_test1.setHeight(nextScale);
+			m_test1.setPosition(350,nextYPosition);
 		}
+// 
+// 		if (BoxCollision(m_test1, m_test0))
+// 		{
+// 			float now0XPosition = m_test0.getPosition().x;
+// 			float now1XPosition = m_test1.getPosition().y;
+// 			float nextXPosition0 = now0XPosition -5;
+// 			float nextXPosition1 = now1XPosition +5;
+// 			m_test0.setPosition(nextXPosition0, now0YPosition);
+// 			m_test1.setPosition(nextXPosition1, nowYPosition);
+// 		}
 	}
 	
 
@@ -145,6 +172,7 @@ void testApp::draw(){
 		ofPushMatrix();
 // 		m_test.setPosition(100,100);
  		m_test0.GlDraw(m_Duk);
+		m_test1.GlDraw(m_Moon);
 
 		//원랜 두사람 랜덤하게 나오게 하려 했으나...
 		//죽을 수도 있을 것 같아서 포기
